@@ -17,12 +17,13 @@ Users can create or join a session, stream microphone audio, and generate transc
 
 ## Tech Stack
 
+- OpenAI Node SDK (`openai`)
+- Upstash Redis
 - Next.js 16 (App Router)
 - React 19
 - TypeScript
 - Tailwind CSS
 - shadcn-style UI components (Button, Select)
-- OpenAI Node SDK (`openai`)
 
 ## Prerequisites
 
