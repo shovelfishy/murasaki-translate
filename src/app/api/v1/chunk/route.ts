@@ -68,7 +68,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Chunk too large." }, { status: 413 });
   }
 
-  const result = appendChunk({
+  const result = await appendChunk({
     code: sessionCode,
     role: body.role,
     clientId: typeof body.clientId === "string" ? body.clientId.trim() : undefined,

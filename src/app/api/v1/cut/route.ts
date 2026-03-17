@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Missing or invalid requesterRole." }, { status: 400 });
     }
 
-    const cut = beginCut({
+    const cut = await beginCut({
         code: sessionCode,
         requesterRole: body.requesterRole,
         clientId: typeof body.clientId === "string" ? body.clientId.trim() : undefined,
@@ -108,11 +108,11 @@ export async function POST(req: Request) {
             createdAt: Date.now(),
         };
 
-        finishCut({ code: sessionCode, segment });
+        await finishCut({ code: sessionCode, segment });
 
         return NextResponse.json({ ok: true, segment });
     } catch (error) {
-        failCut(sessionCode);
+        await failCut(sessionCode);
         const message = error instanceof Error ? error.message : "Cut failed.";
         return NextResponse.json({ ok: false, reason: message }, { status: 500 });
     }

@@ -111,7 +111,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Missing or invalid desiredRole." }, { status: 400 });
       }
 
-      const session = createSession({
+      const session = await createSession({
         languageA,
         languageB,
         mode,
@@ -125,7 +125,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const session = createSession({ languageA, languageB, mode: "single" });
+    const session = await createSession({ languageA, languageB, mode: "single" });
     return NextResponse.json({
       sessionCode: session.code,
       session: snapshotSession(session),
@@ -140,7 +140,7 @@ export async function POST(req: Request) {
 
     const clientId = normalizeClientId(body.clientId);
 
-    const session = joinSession(sessionCode);
+    const session = await joinSession(sessionCode);
     if (!session) {
       return NextResponse.json({ error: "Session not found." }, { status: 404 });
     }
@@ -159,7 +159,7 @@ export async function POST(req: Request) {
 
     const clientId = normalizeClientId(body.clientId);
 
-    const session = getSession(sessionCode);
+    const session = await getSession(sessionCode);
     if (!session) {
       return NextResponse.json({ error: "Session not found." }, { status: 404 });
     }
@@ -185,7 +185,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing or invalid desiredRole." }, { status: 400 });
     }
 
-    const claimed = claimRole({
+    const claimed = await claimRole({
       code: sessionCode,
       clientId,
       role: body.desiredRole,
@@ -212,7 +212,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing clientId." }, { status: 400 });
     }
 
-    const result = heartbeatSession({ code: sessionCode, clientId });
+    const result = await heartbeatSession({ code: sessionCode, clientId });
     if (!result.ok) {
       return NextResponse.json({ error: result.reason }, { status: result.status });
     }
@@ -231,7 +231,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing clientId." }, { status: 400 });
     }
 
-    const result = leaveSession({ code: sessionCode, clientId });
+    const result = await leaveSession({ code: sessionCode, clientId });
     if (!result.ok) {
       return NextResponse.json({ error: result.reason }, { status: result.status });
     }
@@ -250,7 +250,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing clientId." }, { status: 400 });
     }
 
-    const result = releaseRole({ code: sessionCode, clientId });
+    const result = await releaseRole({ code: sessionCode, clientId });
     if (!result.ok) {
       return NextResponse.json({ error: result.reason }, { status: result.status });
     }
@@ -274,7 +274,7 @@ export async function POST(req: Request) {
 
     const clientId = normalizeClientId(body.clientId);
 
-    const applied = applyControl({
+    const applied = await applyControl({
       code: sessionCode,
       requesterRole: body.requesterRole,
       action: body.controlAction,
@@ -303,7 +303,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing clientId." }, { status: 400 });
     }
 
-    const requested = requestCut({ code: sessionCode, clientId });
+    const requested = await requestCut({ code: sessionCode, clientId });
     if (!requested.ok) {
       return NextResponse.json({ error: requested.reason }, { status: requested.status });
     }
@@ -330,7 +330,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing cutRevision." }, { status: 400 });
     }
 
-    const acked = ackCutReady({
+    const acked = await ackCutReady({
       code: sessionCode,
       clientId,
       cutRevision: body.cutRevision,

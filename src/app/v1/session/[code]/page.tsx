@@ -981,7 +981,7 @@ export default function SessionPage() {
             ? recordingLocal
             : session?.recordingState === "recording";
     const currentRoleLabel =
-        activeMode === "single" ? "Single" : roleLabel(activeRole);
+        activeMode === "single" ? "Single Mode" : roleLabel(activeRole);
     const handshakeInProgress =
         activeMode === "multi" &&
         Boolean(

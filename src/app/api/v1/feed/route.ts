@@ -14,7 +14,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Missing sessionCode." }, { status: 400 });
   }
 
-  const feed = getFeed(sessionCode, Number.isNaN(cursor) ? 0 : cursor, clientId);
+  const feed = await getFeed(sessionCode, Number.isNaN(cursor) ? 0 : cursor, clientId);
   if (!feed) {
     return NextResponse.json({ error: "Session not found." }, { status: 404 });
   }
