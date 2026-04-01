@@ -36,6 +36,8 @@ Create `.env` in project root:
 
 ```bash
 OPENAI_API_KEY=your_key_here
+UPSTASH_REDIS_REST_URL=your_URL_here
+UPSTASH_REDIS_REST_TOKEN=your_token_here
 # Optional overrides:
 OPENAI_STT_MODEL=gpt-4o-mini-transcribe
 OPENAI_TRANSLATION_MODEL=gpt-4o-mini
